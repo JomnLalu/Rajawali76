@@ -5,7 +5,6 @@ public class Control : MonoBehaviour
     private Vector2 direction;
     [Header ("Speed")]
     public float speed;
-  public float y_thrust;
     [Header ("Workspace")]
     private Rigidbody2D playerRb;
     void Start()

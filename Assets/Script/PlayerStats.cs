@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [Header("Score")]
+    public float score = 0f;
+    public float distanceTravelled = 0f;
     [Header("Health")]
-    public float maxHealth = 100f;
+    public float maxHealth;
     public float currentHealth;
     [Header("Fuel")]
-    public float maxFuel = 50f;
+    public float maxFuel;
     public float currentFuel;
-    public float fuelDrainPerSecond = 1f;
-    public float fuelDrainedDamage = 10f;
+    public float fuelDrainPerSecond;
+    public float fuelDrainedDamagef;
     [Header("Audio (SFX)")]
     public AudioSource BGMSource;
     public AudioSource SFXSource;
@@ -24,6 +27,8 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        score += 1f * Time.deltaTime;
+        distanceTravelled += 1f * Time.deltaTime;
         burnFuel();
         healthCheck();
     }
@@ -44,13 +49,20 @@ public class PlayerStats : MonoBehaviour
             currentHealth = -100f;
             OnDeath();
         }
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
     void OnDeath()
     {
+        //Audio Handler
         if (BGMSource.isPlaying)
         {
             BGMSource.Stop();
         }
         SFXSource.PlayOneShot(deathSFX);
+
+        Destroy(gameObject);
     }
 }
