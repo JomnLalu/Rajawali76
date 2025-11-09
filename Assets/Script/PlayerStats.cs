@@ -10,6 +10,8 @@ public class PlayerStats : MonoBehaviour
     public float currentFuel;
     public float fuelDrainPerSecond = 1f;
     public float fuelDrainedDamage = 10f;
+    [Header("Audio (SFX)")]
+    public AudioClip deathSFX;
     void Start()
     {
         currentFuel = maxFuel;
@@ -24,7 +26,7 @@ public class PlayerStats : MonoBehaviour
     void burnFuel()
     {
         currentFuel -= fuelDrainPerSecond * Time.deltaTime;
-        currentFuel = Mathf.clamp(currentFuel, 0, maxFuel);
+        currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
 
         if (currentFuel <= 0f)
         {
