@@ -11,7 +11,10 @@ public class PlayerStats : MonoBehaviour
     public float fuelDrainPerSecond = 1f;
     public float fuelDrainedDamage = 10f;
     [Header("Audio (SFX)")]
+    public AudioSource BGMSource;
+    public AudioSource SFXSource;
     public AudioClip deathSFX;
+
     void Start()
     {
         currentFuel = maxFuel;
@@ -22,6 +25,7 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         burnFuel();
+        healthCheck();
     }
     void burnFuel()
     {
@@ -32,5 +36,21 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth -= 10f * Time.deltaTime;
         }
+    }
+    void healthCheck()
+    {
+        if (currentHealth <= 0 && currentHealth != -100f)
+        {
+            currentHealth = -100f;
+            OnDeath();
+        }
+    }
+    void OnDeath()
+    {
+        if (BGMSource.isPlaying)
+        {
+            BGMSource.Stop();
+        }
+        SFXSource.PlayOneShot(deathSFX);
     }
 }
